@@ -1,0 +1,12 @@
+Finn linjer med færre enn 25 tegn:
+/^.\{,25}$/
+https://stackoverflow.com/questions/5965896/how-to-use-vi-to-search-for-lines-less-than-a-certain-length
+
+Tegnsett:
+set encoding=utf-8  " The encoding displayed.
+set fileencoding=utf-8  " The encoding written to file.
+https://stackoverflow.com/questions/16507777/set-encoding-and-fileencoding-to-utf-8-in-vim
+
+Søk og tell:
+:%s/pattern//gn
+https://vim.fandom.com/wiki/Count_number_of_matches_of_a_pattern
