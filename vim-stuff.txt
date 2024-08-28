@@ -10,3 +10,12 @@ https://stackoverflow.com/questions/16507777/set-encoding-and-fileencoding-to-ut
 Søk og tell:
 :%s/pattern//gn
 https://vim.fandom.com/wiki/Count_number_of_matches_of_a_pattern
+
+Tegn, f.eks. ^M
+:help dig
+https://vimdoc.sourceforge.net/htmldoc/digraph.html#digraph-table
+
+:set list
+NB! :set list will NOT show ^M characters (CRs)
+Må åpne vim med vim -b
+https://stackoverflow.com/questions/3860519/see-line-breaks-and-carriage-returns-in-editor
