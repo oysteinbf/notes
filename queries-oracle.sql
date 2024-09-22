@@ -45,7 +45,7 @@ group by team
 having team <> 'MCI' and sum(price) > 23;
  
 
--- Hent ut og sl� sammen data fra flere rader med listagg
+-- Hent ut og slå sammen data fra flere rader med listagg
 with t as (
 select 'LEE' team, 'Raphina' name, 12.6 price from dual union all
 select 'TOT', 'Kane', 11.1 from dual union all
@@ -83,7 +83,7 @@ pivot(
     ) order by team;
     
 
--- Diff mellom to tabeller/views (husk � ta minus fra begge sider)
+-- Diff mellom to tabeller/views (husk å ta minus fra begge sider)
 with t1 as (
 select 'LEE' team, 'Raphina' name, 12.6 price from dual union all
 select 'TOT', 'Kane', 11.1 from dual union all
@@ -127,7 +127,7 @@ FROM books FULL OUTER JOIN genres USING (BOOK_ID);
 
 
 -- Cross join
--- Fint for � legge til ekstra kolonner. NB, t2 b�r bare ha �n rad
+-- Fint for å legge til ekstra kolonner. NB, t2 bør bare ha én rad
 with t1 as (
 select 'Reodor' navn, 'Felgen' Etternavn from dual union all
 select 'Solan',  'Gundersen' from dual union all
@@ -137,12 +137,12 @@ select 'Fl�klypa' adresse from dual
 )
 select * from t1 cross join t2;
 -- Alternativ uten cross join:
---select * from t1 join t2 on t2.adresse = 'Fl�klypa';
+--select * from t1 join t2 on t2.adresse = 'Flåklypa';
 
 
 -- Full outer join
 -- For store datasett er dette et (bedre) alternativ enn oppslag (from t1 where x not in t2)
--- Dette kan s� kombineres med en merge into p� en eller annen m�te
+-- Dette kan så kombineres med en merge into på en eller annen måte
 with t1 as (
 select '111' id, 'MCI' team, 'aa' col_t1 from dual union all
 select '222', 'MCI', 'bb' from dual union all
@@ -151,13 +151,13 @@ t2 as (
 select '111' id, 'TOT' team, 'dd' col_t2 from dual union all
 select '222', 'MCI', 'ee' from dual union all
 select '444', 'TOT', 'ff' from dual)
--- Antar at col_t1 og col_t2 ikke kan v�re NULL
+-- Antar at col_t1 og col_t2 ikke kan være NULL
 select * from t1 full outer join t2 using (id, team) -- Oversikt over hele datasettet
---where col_t1 is not null and col_t2 is null; -- Alt som inng�r i t1 og ikke i t2
+--where col_t1 is not null and col_t2 is null; -- Alt som inngår i t1 og ikke i t2
 -- Osv.
 
 
--- Tellinger. For � inkludere 0 m� man velge en spesifikk kolonne i t2 (som helst ikke kan v�re NULL)
+-- Tellinger. For å inkludere 0 må man velge en spesifikk kolonne i t2 (som helst ikke kan være NULL)
 with t1 as (
 select '1' country_pk, 'Norway' country_name from dual union all
 select '2', 'Sweden' from dual union all
@@ -210,7 +210,7 @@ DECLARE
   kolonne  VARCHAR2 (30) := 'BLABLA';
   i INTEGER := 950;
 BEGIN
-for x in (select column_value as country_id from table(sys.dbms_debug_vc2coll('6', '7', '8'))) -- ogs� mulig
+for x in (select column_value as country_id from table(sys.dbms_debug_vc2coll('6', '7', '8'))) -- også mulig
 --for x in (select distinct country_id from countries)
     loop
         dml_cmd := 'INSERT INTO COUNTRIES (pk, name, country_id, continent, foo)
@@ -234,12 +234,12 @@ select col_1, to_number(regexp_replace(col_2, '[^0-9]', ''))
 from mytable_backup order by col_1;
 
 
--- Hent ut rader som inneholder bokstaver, alts� ikke tall
+-- Hent ut rader som inneholder bokstaver, altså ikke tall
 SELECT kolonne FROM min_tabell
      WHERE REGEXP_LIKE (kolonne, '[[:alpha:]]');
 
 
--- Gj�r om til tall, dersom det er mulig
+-- Gjør om til tall, dersom det er mulig
 -- https://community.oracle.com/tech/developers/discussion/861288/locating-row-with-invalid-number-from-table-with-few-million-rows
 SELECT to_number(kolonne)
   FROM min_tabell
@@ -281,7 +281,7 @@ select 'LEE', 'Dallas', 5.5 from dual)
 select * from t1 where team not in ('TOT', NULL); -- Ingen rader returneres!
 --select * from t1 where team not in ('TOT'); 
 --select * from t1 where team not in ('TOT') or team is null-- Dette er vel best
--- Hvis NULL er inkludert i det det sp�rres om blir det tr�bbel!
+-- Hvis NULL er inkludert i det det spørres om blir det trøbbel!
 
 
 -- Tabell med inkrementell kolonne
@@ -303,7 +303,7 @@ select * from sys.all_views where owner = 'OWNER_NAME' and view_name like '%_OLD
 select * from all_tab_columns where owner = 'FOO' and lower(column_name) like '%bar%';
 
 
--- S�ke etter tekst i alle views
+-- Søke etter tekst i alle views
 create table zzz_all_view_20230328 as
 select  av.owner, av.view_name,av.owner ||'.'|| av.view_name AS OWNER_VIEW, to_lob(text) as text_clob
 from    ALL_VIEWS av;
@@ -312,24 +312,24 @@ select * from zzz_all_view_20230328
 where upper(text_clob) like '%MY_PATTERN%';
 
 
--- Boolean, sjekke for to negative krav (skal ikke v�re b�de age=80 og code=Y)
+-- Boolean, sjekke for to negative krav (skal ikke være både age=80 og code=Y)
 with t1 as (
 select '111' ssn, '80' age, 'Y' code from dual union all
 select '222', '79', 'Y' from dual union all
 select '333', '80', 'H' from dual)
-select * from t1 where code || age != 'Y80'; -- OK, gir �nskelig resultat, men er treigt?
---select * from t1 where age != '80' or code != 'Y'; --OK, gir �nskelig resultat
+select * from t1 where code || age != 'Y80'; -- OK, gir ønskelig resultat, men er treigt?
+--select * from t1 where age != '80' or code != 'Y'; --OK, gir ønskelig resultat
 --select * from t1 where age != '80' and code != 'Y'; -- Ikke OK
 
 
--- Boolean og NULL, v�r forsiktig! (not equal to, samme utfordringer som not in)
+-- Boolean og NULL, vær forsiktig! (not equal to, samme utfordringer som not in)
 with t1 as (
 select '111' col1, 'aa' col2 from dual union all
 select '222', NULL from dual union all
 select '333', 'bb' from dual)
 --select * from t1;
 --select * from t1 where col2 != 'bb'; -- Inkluderer ikke raden med NULL!
-select * from t1 where (col2 != 'bb' or col2 is null) -- S�nn m� det gj�res 
+select * from t1 where (col2 != 'bb' or col2 is null) -- Sånn må det gjøres 
 
 
 -- Join gotcha
@@ -353,29 +353,29 @@ order by t1.pk;
 
 
 -- Dato-stuff
--- F�rste dag i neste m�ned
+-- Første dag i neste måned
 select trunc(add_months(sysdate, 1),'MON') foo from dual;
 
--- Siste dag i neste m�ned
+-- Siste dag i neste måned
 select trunc(last_day(add_months(sysdate, 1))) foo from dual;
 
--- Siste dag i forrige m�ned
+-- Siste dag i forrige måned
 select trunc(last_day(add_months(sysdate, -1))) foo from dual;
 
--- Den 15. i forrige m�ned
+-- Den 15. i forrige måned
 select trunc(add_months(sysdate, -1), 'MON') +14 foo from dual;
 
--- Den 15. i neste m�ned
+-- Den 15. i neste måned
 select trunc(add_months(sysdate, 1), 'MON') +14 foo from dual;
 
--- Den 15. i denne m�neden
+-- Den 15. i denne måneden
 select trunc(sysdate, 'MON') +14 foo from dual;
 
--- Siste dag i �ret
+-- Siste dag i året
 select TRUNC(SYSDATE, 'YEAR') + INTERVAL '12' MONTH - INTERVAL '1' DAY END_DT from dual;
 
 
--- Eksempel p� oppdatering av tabell (MERGE INTO er raskere enn UPDATE)
+-- Eksempel på oppdatering av tabell (MERGE INTO er raskere enn UPDATE)
 MERGE INTO table_name t
 USING (SELECT primary_key,
               modified_date    valid_from_date,
@@ -401,8 +401,8 @@ THEN
         t.active_flag = updated.active_flag;
 
 
--- Hvis Merge into fra eksternt skript (f.eks. Python) er treigt s� kan man muligens skrive 
--- delresultatet til en dummy-tabell, som s� brukes til � oppdatere t1.
+-- Hvis Merge into fra eksternt skript (f.eks. Python) er treigt så kan man muligens skrive 
+-- delresultatet til en dummy-tabell, som så brukes til å oppdatere t1.
 UPDATE mytable
 SET mytable.column1 = (
     SELECT dummy.column1
@@ -410,7 +410,7 @@ SET mytable.column1 = (
     WHERE mytable.join_column = dummy.join_column
 );   
 
--- Slette rader fra tabell hvor det ikke er noen PK (bruk group by p� alle kolonner)
+-- Slette rader fra tabell hvor det ikke er noen PK (bruk group by på alle kolonner)
 -- https://stackoverflow.com/questions/529098/removing-duplicate-rows-from-table-in-oracle
 delete from loggtabell
 where rowid not in
@@ -438,7 +438,7 @@ select alder, count(*) antall
   group by alder order by alder;
 
 
--- Grupp�r per m�ned og �r
+-- Gruppér per måned og år
 with personer as (
 select to_date('12.03.1992', 'dd.mm.yyyy') fodselsdato_dt from dual union all
 select to_date('08.11.1992', 'dd.mm.yyyy') from dual union all
@@ -482,7 +482,7 @@ select 5555, 'epsilon@epsilon.com', 'AAA' from dual union all
 select 5555, 'zeta@zeta.com', 'BBB' from dual),
 t2 as (
 select t1.*,
-       row_number() over (partition by ssn order by epost) rn, -- L�petall
+       row_number() over (partition by ssn order by epost) rn, -- Løpetall
        count(distinct lower(epost)) over (partition by ssn) n_distinkt_epost
 from t1),
 t3 as (
@@ -499,7 +499,7 @@ final as (
 select * from final;    
     
 
--- Dataprofilering (kopier output, lim inn i vim for videre redigering, f.eks. legge til filter p� tabell)
+-- Dataprofilering (kopier output, lim inn i vim for videre redigering, f.eks. legge til filter på tabell)
 SELECT 'select '
            SS,
        '''' || table_name || ''' tab,'
@@ -522,7 +522,7 @@ SELECT 'select '
  WHERE owner = 'FOO' AND table_name LIKE 'MYTABLE'; -- and column_name in (...)
 
 
--- Eksempel p� rekursjon
+-- Eksempel på rekursjon
 with EMP as (
 SELECT 1 emp_id, 'Greg' emp_name, NULL manager_id FROM DUAL UNION ALL
 SELECT 2, 'Fiona', 1 FROM DUAL UNION ALL
@@ -561,21 +561,21 @@ level3 as (
 select * from level1 union all select * from level2 union all select * from level3;
 
 
--- Endre p� kolonnerekkef�lge (https://stackoverflow.com/questions/4939735/re-order-columns-of-table-in-oracle)
--- N�r en kolonne gj�res usynlig, blir den inkludert i tabellens kolonnerekkef�lge som den siste kolonnen.
+-- Endre på kolonnerekkefølge (https://stackoverflow.com/questions/4939735/re-order-columns-of-table-in-oracle)
+-- Når en kolonne gjøres usynlig, blir den inkludert i tabellens kolonnerekkefølge som den siste kolonnen.
 CREATE TABLE zz_foo (a INT, b INT, d INT, e INT);
 
 ALTER TABLE zz_foo ADD (c INT);
 
-ALTER TABLE zz_foo MODIFY(d INVISIBLE, e INVISIBLE); -- Flyttes n� til enden
+ALTER TABLE zz_foo MODIFY(d INVISIBLE, e INVISIBLE); -- Flyttes nå til enden
 
 ALTER TABLE zz_foo MODIFY(d VISIBLE, e VISIBLE);
 
 
--- Kan/b�r oppdatere statistikk p� tabellgrunnlaget etter st�rre oppdateringer (for � hjelpe query planneren?)
--- Kan ogs� kj�re dette i stedet for Analyze table: exec dbms_stats.gather_schema_stats(ownname => 'SCHEMA_OWNER', estimate_percent => 10)
+-- Kan/bør oppdatere statistikk på tabellgrunnlaget etter større oppdateringer (for å hjelpe query planneren?)
+-- Kan også kjøre dette i stedet for Analyze table: exec dbms_stats.gather_schema_stats(ownname => 'SCHEMA_OWNER', estimate_percent => 10)
 -- Burde bruke dbms_stats, ref. http://www.dba-oracle.com/concepts/tables_optimizer_statistics.htm
--- (kan ogs� kj�re tabell for tabell med dbms_stats.gather_table_stats)
+-- (kan også kjøre tabell for tabell med dbms_stats.gather_table_stats)
 
 BEGIN
 dbms_stats.gather_table_stats(ownname => 'MY_SCHEMA', tabname => 'STG_TABLE1', estimate_percent => 10, cascade => true);
@@ -584,9 +584,9 @@ END;
 
 
 -- Inkrementell kolonne
--- Ved last av store datasett burde man sette f.eks. CACHE 200. Dette kan derimot f�re til at det gj�res hopp i verdiene
--- For � unng� dette sett NOCACHE (det vil da settes inn 1,2,3,4... uten gap)
--- Nja, det er nok ikke s� lett, kan bli gap likevel. For � v�re helt trygg m� man selv sette ID ved insert
+-- Ved last av store datasett burde man sette f.eks. CACHE 200. Dette kan derimot føre til at det gjøres hopp i verdiene
+-- For å unngå dette sett NOCACHE (det vil da settes inn 1,2,3,4... uten gap)
+-- Nja, det er nok ikke så lett, kan bli gap likevel. For å være helt trygg må man selv sette ID ved insert
 CREATE TABLE MY_TABLE
 (
   ID              NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY ( START WITH 1 MINVALUE 1 NOCYCLE NOCACHE ORDER NOKEEP NOSCALE) NOT NULL,
@@ -604,16 +604,16 @@ CREATE TABLE MY_TABLE
 -- Div tips ------------------------------------------------------------
 
 -- Ytelse:
--- Bruk indekser! (se p� hva som brukes i JOIN og WHERE)
--- Gj�r filtrering s� tidlig som mulig
+-- Bruk indekser! (se på hva som brukes i JOIN og WHERE)
+-- Gjør filtrering så tidlig som mulig
 -- Analyze table 
--- For store datasett, gj�r JOIN i stedet for oppslag (where x not in t2)
+-- For store datasett, gjør JOIN i stedet for oppslag (where x not in t2)
 -- Del opp views og bruk heller mellomlagringstabeller eller materialiserte view
--- (som refreshes ved jevne mellomrom, eller f�r/etter ETL-last)
+-- (som refreshes ved jevne mellomrom, eller før/etter ETL-last)
 
--- Lag alltid en PK-kolonne p� nye tabeller (f.eks. inkrementell).
--- Det koster lite, og sparer mye tr�bbel for senere UPDATEs og DELETEs og slik (mye lettere � identifisere rader med PK)
--- (For noen tabeller kan rader identifiseres unikt p� annet vis, f.eks. komposittn�kler. Sett gjerne opp en PK-constraint for � tydeliggj�re dette)
+-- Lag alltid en PK-kolonne på nye tabeller (f.eks. inkrementell).
+-- Det koster lite, og sparer mye trøbbel for senere UPDATEs og DELETEs og slik (mye lettere å identifisere rader med PK)
+-- (For noen tabeller kan rader identifiseres unikt på annet vis, f.eks. komposittnøkler. Sett gjerne opp en PK-constraint for å tydeliggjøre dette)
 
 -- Diverse ressurser
 --https://use-the-index-luke.com/
