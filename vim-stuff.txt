@@ -19,3 +19,7 @@ https://vimdoc.sourceforge.net/htmldoc/digraph.html#digraph-table
 NB! :set list will NOT show ^M characters (CRs)
 Må åpne vim med vim -b
 https://stackoverflow.com/questions/3860519/see-line-breaks-and-carriage-returns-in-editor
+
+Kopier alle linjene i en fil
+:%y+
+https://stackoverflow.com/questions/1620018/copy-all-the-lines-to-clipboard
