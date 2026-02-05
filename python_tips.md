@@ -86,6 +86,18 @@ tree = ET.ElementTree(root)
 tree.write("studentfil.xml", encoding='utf-8')
 ```
 
+XML-validering
+
+```python
+# NB! Egen pakke som må lastes ned med pip
+# https://lxml.de/validation.html#xmlschema
+from lxml import etree
+
+lxml_tree = etree.parse('myfile.xml')
+xmlschema = etree.XMLSchema(file='myschema.xsd')
+print(xmlschema.validate(lxml_tree))
+```
+
 Pitfalls
 ---
 
@@ -108,5 +120,6 @@ Gives
 
 Python packages
 ---
+
 
 Check for vulnerabilities with [pip-audit](https://pypi.org/project/pip-audit/)
