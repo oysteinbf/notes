@@ -1,0 +1,15 @@
+# Vis alle commits for en fil med tilhørende endringer
+git log -p -- my_file.sql
+
+# Se endringer gjort siden en viss dato
+git diff 'HEAD@{6 months ago}' HEAD -- my_file.sql
+
+# Diff mellom main og en branch (sammenlikner D mot F)
+git diff main..my-feature
+
+A -- B -- C --- D  (main)
+           \
+            E -- F  (my-feature)
+
+# Diff mellom main (siden branchingen) og en branch (sammenlikner C mot F)
+git diff main...my-feature
