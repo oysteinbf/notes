@@ -20,6 +20,9 @@ NB! :set list will NOT show ^M characters (CRs)
 Må åpne vim med vim -b
 https://stackoverflow.com/questions/3860519/see-line-breaks-and-carriage-returns-in-editor
 
-Kopier alle linjene i en fil
+Kopier alle linjene i en fil til utklippstavle
 :%y+
 https://stackoverflow.com/questions/1620018/copy-all-the-lines-to-clipboard
+
+Kopier linje 34 til 43 til utklippstavle
+:34,43y +
