@@ -4,6 +4,9 @@ git log -p -- my_file.sql
 # Se endringer gjort siden en viss dato
 git diff 'HEAD@{6 months ago}' HEAD -- my_file.sql
 
+# Hvordan en fil så ut ved en spesifikk commit
+ git show e690c576:my_file.sql
+
 # Diff mellom main og en branch (sammenlikner D mot F)
 git diff main..my-feature
 
