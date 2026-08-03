@@ -21,3 +21,6 @@ git diff main...my-feature
 git fetch origin
 git log HEAD..origin/main --oneline
 # (Hvis denne ikke er tom, vurder å gjøre en merge eller rebase)
+
+# Se filer som er endret i nåværende branch (vs det som ligger i main, husk git fetch origin først)
+git diff origin/main...HEAD --stat
