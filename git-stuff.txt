@@ -16,3 +16,8 @@ A -- B -- C --- D  (main)
 
 # Diff mellom main (siden branchingen) og en branch (sammenlikner C mot F)
 git diff main...my-feature
+
+# Sjekk om det har vært noen endringer i main-branchen som bør inkluderes
+git fetch origin
+git log HEAD..origin/main --oneline
+# (Hvis denne ikke er tom, vurder å gjøre en merge eller rebase)
