@@ -26,3 +26,6 @@ https://stackoverflow.com/questions/1620018/copy-all-the-lines-to-clipboard
 
 Kopier linje 34 til 43 til utklippstavle
 :34,43y +
+
+Formater XML (krever xmllint)
+:%!xmllint --format -
