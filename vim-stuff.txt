@@ -29,3 +29,6 @@ Kopier linje 34 til 43 til utklippstavle
 
 Formater XML (krever xmllint)
 :%!xmllint --format -
+
+Formater JSON (krever jq)
+:%!jq
