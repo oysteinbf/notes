@@ -24,3 +24,8 @@ git log HEAD..origin/main --oneline
 
 # Se filer som er endret i nåværende branch (vs det som ligger i main, husk git fetch origin først)
 git diff origin/main...HEAD --stat
+
+# Merge-konflikt (uløst), sammenlign LOCAL (:2:, min branch) mot REMOTE (:3:, det som merges inn). (:1: er felles base)
+vimdiff \
+<(git show :2:path/to/myfile.py) \
+<(git show :3:path/to/myfile.py)
